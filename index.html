@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daniel Cymes — Technical Operations, measured</title>
+<meta name="description" content="AI-automated media localization delivery: 1,854 jobs, 98.6% acceptance, 6× scale with zero added headcount. The operation that measures itself.">
+<meta property="og:title" content="Daniel Cymes — Technical Operations, measured">
+<meta property="og:description" content="1,854 jobs delivered · 98.6% acceptance · 6× scale, zero added headcount · ~$1/job AI cost">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0b0e14;
+  --panel:#10141d;
+  --panel-2:#141924;
+  --paper:#e9e6df;
+  --muted:#8b8f99;
+  --faint:rgba(233,230,223,.08);
+  --amber:#f2a33c;
+  --amber-dim:rgba(242,163,60,.14);
+  --green:#46d08c;
+  --mono:'IBM Plex Mono',monospace;
+  --sans:'IBM Plex Sans',sans-serif;
+  --disp:'Fraunces',serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--ink);color:var(--paper);font-family:var(--sans);
+  font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(242,163,60,.06),transparent);
+}
+body::after{
+  content:"";position:fixed;inset:0;pointer-events:none;opacity:.35;z-index:9999;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .04 0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+a{color:var(--amber);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1060px;margin:0 auto;padding:0 28px}
+.mono{font-family:var(--mono)}
+
+/* ---------- nav ---------- */
+nav{
+  position:sticky;top:0;z-index:50;background:rgba(11,14,20,.82);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--faint);
+}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+nav .brand{font-family:var(--mono);font-size:13px;letter-spacing:.14em;color:var(--paper)}
+nav .brand b{color:var(--amber)}
+nav .links{display:flex;gap:22px;font-family:var(--mono);font-size:12px;letter-spacing:.08em}
+nav .links a{color:var(--muted)}
+nav .links a:hover{color:var(--amber);text-decoration:none}
+
+/* ---------- hero ---------- */
+header{padding:96px 0 72px;border-bottom:1px solid var(--faint);position:relative;overflow:hidden}
+.kicker{font-family:var(--mono);font-size:12px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase;margin-bottom:26px;display:flex;align-items:center;gap:12px}
+.kicker::before{content:"";display:inline-block;width:34px;height:1px;background:var(--amber)}
+h1{
+  font-family:var(--disp);font-weight:300;font-size:clamp(34px,5.4vw,60px);
+  line-height:1.12;letter-spacing:-.01em;max-width:17ch;
+}
+h1 em{font-style:italic;color:var(--amber);font-weight:400}
+.hero-sub{margin-top:28px;max-width:62ch;color:var(--muted);font-size:18px}
+.hero-sub strong{color:var(--paper);font-weight:500}
+.hero-meta{margin-top:36px;font-family:var(--mono);font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:10px 26px}
+.hero-meta span b{color:var(--paper);font-weight:500}
+
+/* ---------- counters band ---------- */
+.band{border-bottom:1px solid var(--faint);background:var(--panel)}
+.counters{display:grid;grid-template-columns:repeat(6,1fr);}
+.counter{padding:30px 18px 26px;border-left:1px solid var(--faint);min-width:0}
+.counter:first-child{border-left:none}
+.counter .num{font-family:var(--mono);font-size:clamp(20px,2.4vw,30px);font-weight:600;color:var(--paper);white-space:nowrap}
+.counter .num .unit{font-size:.62em;color:var(--amber);font-weight:500}
+.counter .lbl{margin-top:7px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);line-height:1.5}
+@media(max-width:900px){.counters{grid-template-columns:repeat(3,1fr)}.counter:nth-child(4){border-left:none}}
+@media(max-width:560px){.counters{grid-template-columns:repeat(2,1fr)}.counter:nth-child(odd){border-left:none}}
+
+/* ---------- sections ---------- */
+section{padding:88px 0;border-bottom:1px solid var(--faint)}
+.sec-head{display:flex;align-items:baseline;gap:18px;margin-bottom:14px}
+.sec-no{font-family:var(--mono);font-size:12px;color:var(--amber);letter-spacing:.15em}
+h2{font-family:var(--disp);font-weight:400;font-size:clamp(26px,3.4vw,38px);letter-spacing:-.01em}
+.sec-intro{color:var(--muted);max-width:68ch;margin-bottom:46px}
+.sec-intro strong{color:var(--paper);font-weight:500}
+
+/* ---------- charts ---------- */
+.charts{display:grid;grid-template-columns:3fr 2fr;gap:22px}
+@media(max-width:860px){.charts{grid-template-columns:1fr}}
+.chart-card{background:var(--panel);border:1px solid var(--faint);padding:26px 26px 18px;position:relative}
+.chart-card h3{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--paper);font-weight:500}
+.chart-card .sub{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:5px;margin-bottom:14px}
+.chart-card svg{width:100%;height:auto;display:block}
+.chart-card .delta{position:absolute;top:24px;right:26px;font-family:var(--mono);font-size:12px;color:var(--green)}
+.qc-row{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:22px}
+@media(max-width:860px){.qc-row{grid-template-columns:1fr}}
+.gauge-wrap{display:flex;align-items:center;gap:22px}
+.gauge-wrap svg{width:110px;flex:none}
+.gauge-txt .big{font-family:var(--mono);font-size:26px;font-weight:600}
+.gauge-txt .big em{font-style:normal;color:var(--amber)}
+.gauge-txt .small{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:4px;line-height:1.6}
+
+/* ---------- case studies ---------- */
+.cases{display:grid;gap:22px}
+.case{
+  background:var(--panel);border:1px solid var(--faint);padding:34px 36px;
+  display:grid;grid-template-columns:52px 1fr;gap:26px;position:relative;
+}
+.case::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--amber);opacity:0;transition:opacity .3s}
+.case:hover::before{opacity:1}
+.case .idx{font-family:var(--disp);font-style:italic;font-size:30px;color:var(--amber);line-height:1}
+.case h3{font-family:var(--disp);font-weight:600;font-size:21px;margin-bottom:16px;letter-spacing:-.01em}
+.pbi{display:grid;gap:12px}
+.pbi .row{display:grid;grid-template-columns:86px 1fr;gap:16px;font-size:15.5px}
+.pbi .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);padding-top:4px}
+.pbi .row p{color:var(--muted)}
+.pbi .row.impact p{color:var(--paper)}
+.pbi .row.impact p b{color:var(--amber);font-weight:600}
+@media(max-width:640px){.case{grid-template-columns:1fr;padding:26px 22px}.pbi .row{grid-template-columns:1fr;gap:4px}}
+
+/* ---------- systems ---------- */
+.sys-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--faint);border:1px solid var(--faint)}
+@media(max-width:860px){.sys-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.sys-grid{grid-template-columns:1fr}}
+.sys{background:var(--ink);padding:24px 22px;transition:background .25s}
+.sys:hover{background:var(--panel-2)}
+.sys .name{font-family:var(--mono);font-size:13.5px;font-weight:600;color:var(--paper);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.sys .lang{font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--amber);border:1px solid var(--amber-dim);background:var(--amber-dim);padding:2px 7px;border-radius:2px}
+.sys p{margin-top:10px;font-size:13.5px;color:var(--muted);line-height:1.55}
+.sys .pub{font-family:var(--mono);font-size:11px;margin-top:10px;display:inline-block}
+.sys .priv{font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-top:10px;display:inline-block;letter-spacing:.04em}
+
+/* ---------- before ---------- */
+.timeline{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+@media(max-width:860px){.timeline{grid-template-columns:1fr}}
+.t-card{border:1px solid var(--faint);background:var(--panel);padding:28px 26px}
+.t-card .when{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--amber);text-transform:uppercase}
+.t-card h3{font-family:var(--disp);font-weight:600;font-size:19px;margin:10px 0 12px}
+.t-card ul{list-style:none;display:grid;gap:8px}
+.t-card li{font-size:14.5px;color:var(--muted);padding-left:16px;position:relative}
+.t-card li::before{content:"·";position:absolute;left:2px;color:var(--amber)}
+.t-card li b{color:var(--paper);font-weight:500}
+
+/* ---------- footer ---------- */
+footer{padding:84px 0 60px}
+.cta{font-family:var(--disp);font-weight:300;font-size:clamp(26px,4vw,42px);line-height:1.2;max-width:22ch}
+.cta em{font-style:italic;color:var(--amber)}
+.foot-links{margin-top:34px;display:flex;gap:28px;flex-wrap:wrap;font-family:var(--mono);font-size:13px}
+.foot-note{margin-top:60px;padding-top:24px;border-top:1px solid var(--faint);font-family:var(--mono);font-size:11.5px;color:var(--muted);line-height:1.8;max-width:72ch}
+.foot-note b{color:var(--amber);font-weight:500}
+
+/* ---------- reveal ---------- */
+.rv{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand"><b>DC</b> // OPERATIONS LEDGER</div>
+    <div class="links">
+      <a href="#numbers">NUMBERS</a>
+      <a href="#work">CASE&nbsp;STUDIES</a>
+      <a href="#systems">SYSTEMS</a>
+      <a href="#contact">CONTACT</a>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <div class="kicker rv">Daniel Cymes · Technical Operations · Tel Aviv</div>
+    <h1 class="rv">I turn manual operations into <em>pipelines that measure themselves.</em></h1>
+    <p class="hero-sub rv">At <strong>Deepdub</strong> (AI media localization), I own end-to-end delivery for the company's largest streaming client — and built the <strong>agentic AI automation</strong> that lets one operator run the entire program. Every number on this page is pulled from append-only ledgers the pipeline writes about its own work.</p>
+    <div class="hero-meta rv">
+      <span>EX-AMAZON · <b>#1-RANKED</b> SORT-CENTER LEADER ×2</span>
+      <span>FOUNDER · <b>$250K+</b> CLIENT REVENUE</span>
+      <span>CLAUDE-NATIVE OPERATOR SINCE <b>2025</b></span>
+    </div>
+  </div>
+</header>
+
+<div class="band" id="numbers">
+  <div class="wrap" style="padding:0">
+    <div class="counters">
+      <div class="counter rv"><div class="num"><span data-count="1854">0</span></div><div class="lbl">jobs delivered</div></div>
+      <div class="counter rv"><div class="num"><span data-count="98.6" data-dec="1">0</span><span class="unit">%</span></div><div class="lbl">final client acceptance</div></div>
+      <div class="counter rv"><div class="num"><span data-count="31139">0</span></div><div class="lbl">content minutes localized</div></div>
+      <div class="counter rv"><div class="num"><span class="unit">$</span><span data-count="145">0</span><span class="unit">K</span></div><div class="lbl">revenue earned</div></div>
+      <div class="counter rv"><div class="num"><span data-count="6">0</span><span class="unit">×</span></div><div class="lbl">volume scaled, zero added headcount</div></div>
+      <div class="counter rv"><div class="num">~<span class="unit">$</span><span data-count="1">0</span></div><div class="lbl">AI cost per job</div></div>
+    </div>
+  </div>
+</div>
+
+<section id="measured">
+  <div class="wrap">
+    <div class="sec-head rv"><span class="sec-no">01</span><h2>The operation, measured</h2></div>
+    <p class="sec-intro rv">Charts render directly from the pipeline's own batch ledger — <strong>14 production batches</strong>, 202 orders, ~2,000 jobs — reconciled to the dollar against the client's rate cards.</p>
+
+    <div class="charts">
+      <div class="chart-card rv">
+        <h3>Batch turnaround, days</h3>
+        <div class="sub">average intake → delivery per batch</div>
+        <div class="delta">▼ 4 wks → &lt;2 wks</div>
+        <svg id="turnChart" viewBox="0 0 560 240" role="img" aria-label="Batch turnaround falling from about 30 days to under 14"></svg>
+      </div>
+      <div class="chart-card rv">
+        <h3>Jobs delivered / month</h3>
+        <div class="sub">2026, from delivery logs</div>
+        <svg id="volChart" viewBox="0 0 360 240" role="img" aria-label="Monthly delivered jobs, peaking at 808 in August"></svg>
+      </div>
+    </div>
+
+    <div class="qc-row">
+      <div class="chart-card rv">
+        <div class="gauge-wrap">
+          <svg viewBox="0 0 100 100" id="g1"></svg>
+          <div class="gauge-txt">
+            <div class="big"><em>98.6%</em></div>
+            <div class="small">final acceptance<br>across 1,854 delivered jobs</div>
+          </div>
+        </div>
+      </div>
+      <div class="chart-card rv">
+        <div class="gauge-wrap">
+          <svg viewBox="0 0 100 100" id="g2"></svg>
+          <div class="gauge-txt">
+            <div class="big"><em>89.4%</em></div>
+            <div class="small">first-pass QC<br>only 45 refix jobs in ~1,850</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="sec-head rv"><span class="sec-no">02</span><h2>Case studies</h2></div>
+    <p class="sec-intro rv">Problem → Built → Impact. Each one started as a firefight and ended as a <strong>permanent, reusable asset</strong>.</p>
+
+    <div class="cases">
+      <article class="case rv">
+        <div class="idx">a.</div>
+        <div>
+          <h3>Spec-driven, LLM-assisted pre-delivery QC</h3>
+          <div class="pbi">
+            <div class="row"><span class="tag">Problem</span><p>~1 in 3 client deliveries got flagged. The mechanical specs that would have caught them — filename schemas, character limits, metadata rules — lived in one person's memory, across 10–20 clients.</p></div>
+            <div class="row"><span class="tag">Built</span><p>Each client spec codified as machine-checkable rules, plus an LLM-assisted QC pass that validates every delivery before it ships. Proven with a retrospective harness replaying real past deliveries against the client's own verdicts.</p></div>
+            <div class="row impact"><span class="tag">Impact</span><p><b>58% of client-verified mechanical failures caught pre-ship</b> on a 293-delivery retrospective — measured, not projected. New client onboarding became "add a spec," not "add a late night." Projected <b>0.6–0.7 FTE</b> of rework eliminated at full scale.</p></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="case rv">
+        <div class="idx">b.</div>
+        <div>
+          <h3>An agentic AI delivery pipeline, run by one operator</h3>
+          <div class="pbi">
+            <div class="row"><span class="tag">Problem</span><p>Thousands of localization jobs for a major streaming platform had to be manually pulled, submitted, QC'd, fixed, and delivered — order by order, by hand.</p></div>
+            <div class="row"><span class="tag">Built</span><p>End-to-end agentic automation: intake → cloud staging → submission → QC triage → 8-way parallel delivery → refix loop, with append-only audit logs. The recurring operations were then codified into fully autonomous, invocable agent skills.</p></div>
+            <div class="row impact"><span class="tag">Impact</span><p><b>1,854 jobs delivered at 98.6% acceptance, $145K revenue earned</b>, batch turnaround cut from ~4 weeks to under 2, and volume scaled <b>~6× with zero added headcount</b> — at ~$1 per job in AI cost.</p></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="case rv">
+        <div class="idx">c.</div>
+        <div>
+          <h3>Private workflow → shared infrastructure</h3>
+          <div class="pbi">
+            <div class="row"><span class="tag">Problem</span><p>A production dubbing API was usable only by hand or through bespoke one-off scripts — the knowledge locked in one person.</p></div>
+            <div class="row"><span class="tag">Built</span><p>A 14-tool MCP server (TypeScript) exposing submit / update / cancel / usage / issues as first-class tools any AI agent or teammate can call — plus internal ops dashboards (FastAPI · SQLite · Streamlit).</p></div>
+            <div class="row impact"><span class="tag">Impact</span><p>A single person's capability became <b>org-wide, agent-callable infrastructure</b> — the concrete version of "AI adoption," not the slideware version.</p></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="case rv">
+        <div class="idx">d.</div>
+        <div>
+          <h3>High-stakes compliance, zero-defect</h3>
+          <div class="pbi">
+            <div class="row"><span class="tag">Problem</span><p>Premium broadcast clients ship on strict, unforgiving multi-channel protocols; separately, a legal audit found hundreds of voice-consent records scrambled — on a deadline.</p></div>
+            <div class="row"><span class="tag">Built</span><p>Codified a major U.S. broadcast network's delivery SOP across three transport channels (email, Aspera, Signiant) with versioning and barcode schemas; built a programmatic re-matching pipeline for the waiver audit.</p></div>
+            <div class="row impact"><span class="tag">Impact</span><p><b>282 of 287 records re-matched</b> under deadline; zero-defect deliveries on the company's most reputation-sensitive relationships.</p></div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="systems">
+  <div class="wrap">
+    <div class="sec-head rv"><span class="sec-no">03</span><h2>Systems built along the way</h2></div>
+    <p class="sec-intro rv">The seniority argument is the <strong>layering</strong>: run the operation → automate it → turn the automation into assets the company keeps.</p>
+
+    <div class="sys-grid rv">
+      <div class="sys">
+        <div class="name">media-qc-engine <span class="lang">PYTHON</span></div>
+        <p>Spec-driven automated QC: 24 architecture decision records, CI, Docker. The proof behind the 58% catch rate.</p>
+        <a class="pub" href="https://github.com/danielcymes-prog/Deepdub-Automated-Media-QC-Engine" target="_blank" rel="noopener">↗ public repo</a>
+      </div>
+      <div class="sys">
+        <div class="name">managed-dub-mcp-server <span class="lang">TYPESCRIPT</span></div>
+        <p>14 tools wrapping a production dubbing API — submit, update, cancel, usage, issues — callable by any AI agent.</p>
+        <span class="priv">private · demo on request</span>
+      </div>
+      <div class="sys">
+        <div class="name">autosubs-pipeline <span class="lang">PYTHON</span></div>
+        <p>The end-to-end delivery pipeline: intake, staging, submission, QC gates, 8-way parallel delivery, refix loops.</p>
+        <span class="priv">private · demo on request</span>
+      </div>
+      <div class="sys">
+        <div class="name">impact-tracker <span class="lang">PYTHON</span></div>
+        <p>Self-updating ledgers reconciling revenue to the dollar against client rate cards. The source of this page's numbers.</p>
+        <span class="priv">private · demo on request</span>
+      </div>
+      <div class="sys">
+        <div class="name">ops-dashboards <span class="lang">FASTAPI</span></div>
+        <p>Internal web UIs for workflow tracking and review-log operations (FastAPI · SQLite · Streamlit).</p>
+        <span class="priv">private · demo on request</span>
+      </div>
+      <div class="sys">
+        <div class="name">agentic-os <span class="lang">PYTHON</span></div>
+        <p>Personal project: an OS-style runtime for AI agents — kernel, syscalls, capabilities, control plane. 57 tests.</p>
+        <span class="priv">private · demo on request</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="before">
+  <div class="wrap">
+    <div class="sec-head rv"><span class="sec-no">04</span><h2>Before the pipelines</h2></div>
+    <div class="timeline" style="margin-top:40px">
+      <div class="t-card rv">
+        <div class="when">2023 – 2025 · Amazon</div>
+        <h3>Area Manager, L4 → L5</h3>
+        <ul>
+          <li><b>#1 nationally ranked</b> sort-center leader, twice; top-5 for 16 of 26 weeks</li>
+          <li>Missort defects cut <b>2,333 → 1,755 DPMO</b>; +12% shift productivity via Lean</li>
+          <li>Team job satisfaction <b>25% → 75%</b>; founded site's mental-health affinity group</li>
+        </ul>
+      </div>
+      <div class="t-card rv">
+        <div class="when">2022 – present · Founder</div>
+        <h3>Daniel Cymes Creative LLC</h3>
+        <ul>
+          <li>Marketing consultancy, <b>6+ client accounts</b> across industries</li>
+          <li><b>$250K+ revenue</b> generated for a client via segmentation &amp; acquisition</li>
+          <li>400%+ social engagement growth for multiple clients</li>
+        </ul>
+      </div>
+      <div class="t-card rv">
+        <div class="when">2018 – 2022 · JMU</div>
+        <h3>BA, Media Arts &amp; Design</h3>
+        <ul>
+          <li>Minor in Entrepreneurship · <b>Cum Laude</b>, 3.5 GPA</li>
+          <li>Imre Scholarship (faculty-nominated)</li>
+          <li>Supervised a 278,000 sq ft rec facility &amp; 500+ student staff</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <p class="cta rv">Hiring for customer success, project management, account management, or <em>AI-driven operations?</em></p>
+    <div class="foot-links rv">
+      <a href="mailto:danielcymes@gmail.com">danielcymes@gmail.com</a>
+      <a href="https://www.linkedin.com/in/daniel-cymes/" target="_blank" rel="noopener">linkedin/daniel-cymes</a>
+      <a href="https://github.com/3aruch-dev" target="_blank" rel="noopener">github/3aruch-dev</a>
+    </div>
+    <p class="foot-note rv"><b>Provenance:</b> metrics on this page come from append-only operational ledgers (delivery logs, QC verdicts, client rate-card reconciliation) generated by the pipeline itself, snapshotted 2026-10-25. Client names appear only where publicly listed. Built by Daniel with Claude — the same way the pipelines were.</p>
+  </div>
+</footer>
+
+<script>
+/* ---------- data (from impact tracker ledgers, 2026-10-25) ---------- */
+const TURNAROUND = [ // [batch label, avg days]
+  ["B1",21.6],["B2",30.7],["B3",28.7],["B5",15.2],["B6",17.1],["B6.5",12.4],
+  ["B7",4.6],["B8",7.2],["B9",11.0],["B10",11.5],["B11",13.3],["B12",15.0],["B13",11.4]
+];
+const MONTHLY = [["MAY",306],["JUN",298],["AUG",808],["SEP",231],["OCT",211]];
+
+/* ---------- reveal on scroll ---------- */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
+document.querySelectorAll('.rv').forEach((el,i)=>{el.style.transitionDelay=(i%6*60)+'ms';io.observe(el)});
+
+/* ---------- counters ---------- */
+const cio=new IntersectionObserver(es=>es.forEach(e=>{
+  if(!e.isIntersecting)return;cio.unobserve(e.target);
+  const el=e.target,target=parseFloat(el.dataset.count),dec=parseInt(el.dataset.dec||0),t0=performance.now(),D=1400;
+  (function tick(t){const p=Math.min((t-t0)/D,1),v=target*(1-Math.pow(1-p,3));
+    el.textContent=v.toLocaleString('en-US',{minimumFractionDigits:dec,maximumFractionDigits:dec});
+    if(p<1)requestAnimationFrame(tick)})(t0);
+}),{threshold:.6});
+document.querySelectorAll('[data-count]').forEach(el=>cio.observe(el));
+
+/* ---------- turnaround line chart ---------- */
+(function(){
+  const svg=document.getElementById('turnChart'),W=560,H=240,P={l:34,r:14,t:18,b:30};
+  const xs=i=>P.l+(W-P.l-P.r)*i/(TURNAROUND.length-1);
+  const ys=v=>P.t+(H-P.t-P.b)*(1-v/32);
+  let g='';
+  [0,10,20,30].forEach(v=>{g+=`<line x1="${P.l}" x2="${W-P.r}" y1="${ys(v)}" y2="${ys(v)}" stroke="rgba(233,230,223,.07)"/>
+  <text x="${P.l-8}" y="${ys(v)+4}" fill="#8b8f99" font-size="10" font-family="IBM Plex Mono" text-anchor="end">${v}</text>`});
+  const pts=TURNAROUND.map((d,i)=>[xs(i),ys(d[1])]);
+  const line=pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+  const area=line+` L${pts[pts.length-1][0]},${ys(0)} L${pts[0][0]},${ys(0)} Z`;
+  g+=`<path d="${area}" fill="rgba(242,163,60,.08)"/>`;
+  g+=`<path d="${line}" fill="none" stroke="#f2a33c" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" pathLength="1" class="draw"/>`;
+  TURNAROUND.forEach((d,i)=>{
+    g+=`<circle cx="${xs(i)}" cy="${ys(d[1])}" r="3" fill="#0b0e14" stroke="#f2a33c" stroke-width="1.6"/>`;
+    g+=`<text x="${xs(i)}" y="${H-10}" fill="#8b8f99" font-size="9" font-family="IBM Plex Mono" text-anchor="middle">${d[0]}</text>`;
+  });
+  g+=`<style>.draw{stroke-dasharray:1;stroke-dashoffset:1;animation:dr 1.8s .3s ease forwards}@keyframes dr{to{stroke-dashoffset:0}}</style>`;
+  svg.innerHTML=g;
+})();
+
+/* ---------- monthly volume bars ---------- */
+(function(){
+  const svg=document.getElementById('volChart'),W=360,H=240,P={l:34,r:10,t:18,b:30},max=850;
+  const bw=(W-P.l-P.r)/MONTHLY.length;
+  let g='';
+  [0,400,800].forEach(v=>{const y=P.t+(H-P.t-P.b)*(1-v/max);
+    g+=`<line x1="${P.l}" x2="${W-P.r}" y1="${y}" y2="${y}" stroke="rgba(233,230,223,.07)"/>
+    <text x="${P.l-8}" y="${y+4}" fill="#8b8f99" font-size="10" font-family="IBM Plex Mono" text-anchor="end">${v}</text>`});
+  MONTHLY.forEach((d,i)=>{
+    const h=(H-P.t-P.b)*d[1]/max,x=P.l+i*bw+bw*.18,w=bw*.64,y=H-P.b-h;
+    const hot=d[1]===808;
+    g+=`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${hot?'#f2a33c':'rgba(242,163,60,.28)'}" class="bar" style="animation-delay:${i*.12}s"/>`;
+    g+=`<text x="${x+w/2}" y="${y-7}" fill="${hot?'#f2a33c':'#8b8f99'}" font-size="10" font-family="IBM Plex Mono" text-anchor="middle" font-weight="${hot?600:400}">${d[1]}</text>`;
+    g+=`<text x="${x+w/2}" y="${H-10}" fill="#8b8f99" font-size="9" font-family="IBM Plex Mono" text-anchor="middle">${d[0]}</text>`;
+  });
+  g+=`<style>.bar{transform-origin:bottom;transform-box:fill-box;animation:gr .9s ease both}@keyframes gr{from{transform:scaleY(0)}}</style>`;
+  svg.innerHTML=g;
+})();
+
+/* ---------- gauges ---------- */
+function gauge(id,pct){
+  const svg=document.getElementById(id),r=40,c=2*Math.PI*r;
+  svg.innerHTML=`<circle cx="50" cy="50" r="${r}" fill="none" stroke="rgba(233,230,223,.09)" stroke-width="7"/>
+  <circle cx="50" cy="50" r="${r}" fill="none" stroke="#f2a33c" stroke-width="7" stroke-linecap="round"
+    stroke-dasharray="${c}" stroke-dashoffset="${c*(1-pct/100)}" transform="rotate(-90 50 50)"
+    style="transition:stroke-dashoffset 1.6s ease .3s"/>`;
+}
+gauge('g1',98.6);gauge('g2',89.4);
+</script>
+</body>
+</html>
