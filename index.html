@@ -7,6 +7,12 @@
 <meta name="description" content="AI-automated media localization delivery: 1,854 jobs, 98.6% acceptance, 6× scale with zero added headcount. The operation that measures itself.">
 <meta property="og:title" content="Daniel Cymes — Technical Operations, measured">
 <meta property="og:description" content="1,854 jobs delivered · 98.6% acceptance · 6× scale, zero added headcount · ~$1/job AI cost">
+<meta property="og:image" content="https://3aruch-dev.github.io/og.png">
+<meta property="og:url" content="https://3aruch-dev.github.io/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0b0e14">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230b0e14'/%3E%3Ctext x='32' y='43' font-family='monospace' font-size='30' font-weight='600' fill='%23f2a33c' text-anchor='middle'%3EDC%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -50,8 +56,17 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:5
 nav .brand{font-family:var(--mono);font-size:13px;letter-spacing:.14em;color:var(--paper)}
 nav .brand b{color:var(--amber)}
 nav .links{display:flex;gap:22px;font-family:var(--mono);font-size:12px;letter-spacing:.08em}
-nav .links a{color:var(--muted)}
+nav .links a{color:var(--muted);padding:8px 0}
 nav .links a:hover{color:var(--amber);text-decoration:none}
+@media(max-width:640px){
+  nav .wrap{padding:0 18px}
+  nav .brand .full{display:none}
+  nav .links{gap:16px;font-size:11px;letter-spacing:.04em}
+  .wrap{padding:0 20px}
+  header{padding:64px 0 52px}
+  section{padding:60px 0}
+  .case{padding:24px 18px}
+}
 
 /* ---------- hero ---------- */
 header{padding:96px 0 72px;border-bottom:1px solid var(--faint);position:relative;overflow:hidden}
@@ -94,6 +109,7 @@ h2{font-family:var(--disp);font-weight:400;font-size:clamp(26px,3.4vw,38px);lett
 .chart-card .sub{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:5px;margin-bottom:14px}
 .chart-card svg{width:100%;height:auto;display:block}
 .chart-card .delta{position:absolute;top:24px;right:26px;font-family:var(--mono);font-size:12px;color:var(--green)}
+@media(max-width:640px){.chart-card .delta{position:static;display:block;margin:2px 0 10px}}
 .qc-row{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:22px}
 @media(max-width:860px){.qc-row{grid-template-columns:1fr}}
 .gauge-wrap{display:flex;align-items:center;gap:22px}
@@ -161,7 +177,7 @@ footer{padding:84px 0 60px}
 
 <nav>
   <div class="wrap">
-    <div class="brand"><b>DC</b> // OPERATIONS LEDGER</div>
+    <div class="brand"><b>DC</b><span class="full"> // OPERATIONS LEDGER</span></div>
     <div class="links">
       <a href="#numbers">NUMBERS</a>
       <a href="#work">CASE&nbsp;STUDIES</a>
@@ -405,45 +421,53 @@ const cio=new IntersectionObserver(es=>es.forEach(e=>{
 }),{threshold:.6});
 document.querySelectorAll('[data-count]').forEach(el=>cio.observe(el));
 
-/* ---------- turnaround line chart ---------- */
-(function(){
-  const svg=document.getElementById('turnChart'),W=560,H=240,P={l:34,r:14,t:18,b:30};
-  const xs=i=>P.l+(W-P.l-P.r)*i/(TURNAROUND.length-1);
-  const ys=v=>P.t+(H-P.t-P.b)*(1-v/32);
-  let g='';
-  [0,10,20,30].forEach(v=>{g+=`<line x1="${P.l}" x2="${W-P.r}" y1="${ys(v)}" y2="${ys(v)}" stroke="rgba(233,230,223,.07)"/>
-  <text x="${P.l-8}" y="${ys(v)+4}" fill="#8b8f99" font-size="10" font-family="IBM Plex Mono" text-anchor="end">${v}</text>`});
-  const pts=TURNAROUND.map((d,i)=>[xs(i),ys(d[1])]);
-  const line=pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
-  const area=line+` L${pts[pts.length-1][0]},${ys(0)} L${pts[0][0]},${ys(0)} Z`;
-  g+=`<path d="${area}" fill="rgba(242,163,60,.08)"/>`;
-  g+=`<path d="${line}" fill="none" stroke="#f2a33c" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" pathLength="1" class="draw"/>`;
-  TURNAROUND.forEach((d,i)=>{
-    g+=`<circle cx="${xs(i)}" cy="${ys(d[1])}" r="3" fill="#0b0e14" stroke="#f2a33c" stroke-width="1.6"/>`;
-    g+=`<text x="${xs(i)}" y="${H-10}" fill="#8b8f99" font-size="9" font-family="IBM Plex Mono" text-anchor="middle">${d[0]}</text>`;
-  });
-  g+=`<style>.draw{stroke-dasharray:1;stroke-dashoffset:1;animation:dr 1.8s .3s ease forwards}@keyframes dr{to{stroke-dashoffset:0}}</style>`;
-  svg.innerHTML=g;
-})();
+/* ---------- charts (mobile-aware: bigger type + sparser labels on small screens) ---------- */
+function drawCharts(){
+  const mob=window.innerWidth<640;
+  const F={tick:mob?14:10,x:mob?13:9,val:mob?14:10};
 
-/* ---------- monthly volume bars ---------- */
-(function(){
-  const svg=document.getElementById('volChart'),W=360,H=240,P={l:34,r:10,t:18,b:30},max=850;
-  const bw=(W-P.l-P.r)/MONTHLY.length;
-  let g='';
-  [0,400,800].forEach(v=>{const y=P.t+(H-P.t-P.b)*(1-v/max);
-    g+=`<line x1="${P.l}" x2="${W-P.r}" y1="${y}" y2="${y}" stroke="rgba(233,230,223,.07)"/>
-    <text x="${P.l-8}" y="${y+4}" fill="#8b8f99" font-size="10" font-family="IBM Plex Mono" text-anchor="end">${v}</text>`});
-  MONTHLY.forEach((d,i)=>{
-    const h=(H-P.t-P.b)*d[1]/max,x=P.l+i*bw+bw*.18,w=bw*.64,y=H-P.b-h;
-    const hot=d[1]===808;
-    g+=`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${hot?'#f2a33c':'rgba(242,163,60,.28)'}" class="bar" style="animation-delay:${i*.12}s"/>`;
-    g+=`<text x="${x+w/2}" y="${y-7}" fill="${hot?'#f2a33c':'#8b8f99'}" font-size="10" font-family="IBM Plex Mono" text-anchor="middle" font-weight="${hot?600:400}">${d[1]}</text>`;
-    g+=`<text x="${x+w/2}" y="${H-10}" fill="#8b8f99" font-size="9" font-family="IBM Plex Mono" text-anchor="middle">${d[0]}</text>`;
-  });
-  g+=`<style>.bar{transform-origin:bottom;transform-box:fill-box;animation:gr .9s ease both}@keyframes gr{from{transform:scaleY(0)}}</style>`;
-  svg.innerHTML=g;
-})();
+  (function(){
+    const svg=document.getElementById('turnChart'),W=560,H=mob?300:240,P={l:mob?42:34,r:14,t:18,b:mob?38:30};
+    svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+    const xs=i=>P.l+(W-P.l-P.r)*i/(TURNAROUND.length-1);
+    const ys=v=>P.t+(H-P.t-P.b)*(1-v/32);
+    let g='';
+    [0,10,20,30].forEach(v=>{g+=`<line x1="${P.l}" x2="${W-P.r}" y1="${ys(v)}" y2="${ys(v)}" stroke="rgba(233,230,223,.07)"/>
+    <text x="${P.l-8}" y="${ys(v)+4}" fill="#8b8f99" font-size="${F.tick}" font-family="IBM Plex Mono" text-anchor="end">${v}</text>`});
+    const pts=TURNAROUND.map((d,i)=>[xs(i),ys(d[1])]);
+    const line=pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+    const area=line+` L${pts[pts.length-1][0]},${ys(0)} L${pts[0][0]},${ys(0)} Z`;
+    g+=`<path d="${area}" fill="rgba(242,163,60,.08)"/>`;
+    g+=`<path d="${line}" fill="none" stroke="#f2a33c" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" pathLength="1" class="draw"/>`;
+    TURNAROUND.forEach((d,i)=>{
+      g+=`<circle cx="${xs(i)}" cy="${ys(d[1])}" r="3" fill="#0b0e14" stroke="#f2a33c" stroke-width="1.6"/>`;
+      if(!mob||i%2===0) g+=`<text x="${xs(i)}" y="${H-10}" fill="#8b8f99" font-size="${F.x}" font-family="IBM Plex Mono" text-anchor="middle">${d[0]}</text>`;
+    });
+    g+=`<style>.draw{stroke-dasharray:1;stroke-dashoffset:1;animation:dr 1.8s .3s ease forwards}@keyframes dr{to{stroke-dashoffset:0}}</style>`;
+    svg.innerHTML=g;
+  })();
+
+  (function(){
+    const svg=document.getElementById('volChart'),W=360,H=mob?300:240,P={l:mob?44:34,r:10,t:18,b:mob?38:30},max=850;
+    svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+    const bw=(W-P.l-P.r)/MONTHLY.length;
+    let g='';
+    [0,400,800].forEach(v=>{const y=P.t+(H-P.t-P.b)*(1-v/max);
+      g+=`<line x1="${P.l}" x2="${W-P.r}" y1="${y}" y2="${y}" stroke="rgba(233,230,223,.07)"/>
+      <text x="${P.l-8}" y="${y+4}" fill="#8b8f99" font-size="${F.tick}" font-family="IBM Plex Mono" text-anchor="end">${v}</text>`});
+    MONTHLY.forEach((d,i)=>{
+      const h=(H-P.t-P.b)*d[1]/max,x=P.l+i*bw+bw*.18,w=bw*.64,y=H-P.b-h;
+      const hot=d[1]===808;
+      g+=`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${hot?'#f2a33c':'rgba(242,163,60,.28)'}" class="bar" style="animation-delay:${i*.12}s"/>`;
+      g+=`<text x="${x+w/2}" y="${y-7}" fill="${hot?'#f2a33c':'#8b8f99'}" font-size="${F.val}" font-family="IBM Plex Mono" text-anchor="middle" font-weight="${hot?600:400}">${d[1]}</text>`;
+      g+=`<text x="${x+w/2}" y="${H-10}" fill="#8b8f99" font-size="${F.x}" font-family="IBM Plex Mono" text-anchor="middle">${d[0]}</text>`;
+    });
+    g+=`<style>.bar{transform-origin:bottom;transform-box:fill-box;animation:gr .9s ease both}@keyframes gr{from{transform:scaleY(0)}}</style>`;
+    svg.innerHTML=g;
+  })();
+}
+drawCharts();
+let rsz;window.addEventListener('resize',()=>{clearTimeout(rsz);rsz=setTimeout(drawCharts,200)});
 
 /* ---------- gauges ---------- */
 function gauge(id,pct){
