@@ -105,12 +105,19 @@ h2{font-size:clamp(38px,6vw,72px);margin-top:12px}
 .case{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:36px;display:flex;flex-direction:column;transition:transform .25s ease,box-shadow .25s ease}
 .case:hover{transform:translateY(-4px);box-shadow:0 4px 10px rgba(0,0,0,.05),0 28px 70px rgba(0,0,0,.1)}
 .case .no{font-family:var(--disp);font-size:15px;background:var(--ink);color:var(--volt);width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:22px}
-.case h3{font-size:22px;font-weight:700;letter-spacing:-.01em;line-height:1.25}
-.case .prob{margin-top:14px;color:var(--grey);font-size:15.5px}
-.case .impact{margin-top:auto;padding-top:22px}
-.case .impact .line{border-top:1px solid var(--line);padding-top:18px;font-size:15.5px}
-.case .impact b{font-weight:700}
-.case .impact .hl{background:var(--volt);padding:0 5px;border-radius:4px;font-weight:700}
+.case h3{font-size:22px;font-weight:700;letter-spacing:-.01em;line-height:1.25;margin-bottom:6px}
+.case .pbi{display:flex;flex-direction:column;flex:1}
+.case .step{padding:16px 0;border-top:1px solid var(--line)}
+.case .step:first-child{border-top:none}
+.case .step .k{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--grey);display:inline-block;margin-bottom:6px}
+.case .step.impact{margin-top:auto}
+.case .step.impact .k{background:var(--volt);color:var(--ink);padding:3px 10px;border-radius:99px}
+.case .step p{font-size:15px;color:var(--grey);line-height:1.6}
+.case .step.impact p{color:var(--ink)}
+.case .step p b{font-weight:700;color:var(--ink)}
+.case .step .hl{background:var(--volt);padding:0 5px;border-radius:4px;font-weight:700;color:var(--ink)}
+.copied{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(10px);background:var(--volt);color:var(--ink);font-weight:700;font-size:14px;padding:10px 22px;border-radius:99px;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:99}
+.copied.show{opacity:1;transform:translateX(-50%)}
 
 /* ---------- systems ---------- */
 .chips{display:flex;flex-wrap:wrap;gap:12px;margin-top:44px}
@@ -160,7 +167,7 @@ footer p{color:rgba(255,255,255,.6);margin-top:20px;font-size:17px}
       <a href="#systems">Systems</a>
       <a href="#career">Career</a>
     </div>
-    <a class="cta-s" href="mailto:danielcymes@gmail.com">Get in touch</a>
+    <a class="cta-s" href="#contact">Get in touch</a>
   </div>
 </nav>
 
@@ -246,26 +253,38 @@ footer p{color:rgba(255,255,255,.6);margin-top:20px;font-size:17px}
       <article class="case rv">
         <div class="no">01</div>
         <h3>Spec-driven, LLM-assisted pre-delivery QC</h3>
-        <p class="prob">~1 in 3 deliveries got flagged by client QC. The mechanical specs that would have caught them lived in one person's memory, across 10–20 clients. I codified them into machine-checkable rules plus an LLM-assisted pass that runs before anything ships.</p>
-        <div class="impact"><div class="line"><span class="hl">58%</span> of client-verified failures caught pre-ship on a 293-delivery retrospective — <b>measured, not projected</b>. ~0.6–0.7 FTE of rework eliminated at scale.</div></div>
+        <div class="pbi">
+          <div class="step"><span class="k">Problem</span><p>~1 in 3 client deliveries got flagged. The mechanical specs that would have caught them — filename schemas, character limits, metadata rules — lived in one person's memory, across 10–20 clients.</p></div>
+          <div class="step"><span class="k">Built</span><p>Each client spec codified as machine-checkable rules, plus an LLM-assisted QC pass that validates every delivery before it ships — proven by replaying real past deliveries against the client's own verdicts.</p></div>
+          <div class="step impact"><span class="k">Impact</span><p><span class="hl">58%</span> of client-verified mechanical failures caught pre-ship on a 293-delivery retrospective — <b>measured, not projected</b>. ~0.6–0.7 FTE of rework eliminated at scale.</p></div>
+        </div>
       </article>
       <article class="case rv">
         <div class="no">02</div>
         <h3>An agentic delivery pipeline, run by one operator</h3>
-        <p class="prob">Thousands of localization jobs had to be manually pulled, submitted, QC'd, fixed, and delivered. I built end-to-end agentic automation — intake through completion, 8-way parallel delivery, append-only audit logs — then codified the operations into autonomous agent skills.</p>
-        <div class="impact"><div class="line"><span class="hl">1,854 jobs</span> at 98.6% acceptance, <b>$145K revenue</b>, turnaround cut from ~4 weeks to under 2.</div></div>
+        <div class="pbi">
+          <div class="step"><span class="k">Problem</span><p>Thousands of localization jobs for a major streaming platform had to be manually pulled, submitted, QC'd, fixed, and delivered — order by order, by hand.</p></div>
+          <div class="step"><span class="k">Built</span><p>End-to-end agentic automation: intake → cloud staging → submission → QC triage → 8-way parallel delivery → refix loop, with append-only audit logs — then codified into fully autonomous, invocable agent skills.</p></div>
+          <div class="step impact"><span class="k">Impact</span><p><span class="hl">1,854 jobs</span> at 98.6% acceptance, <b>$145K revenue earned</b>, turnaround cut from ~4 weeks to under 2, volume scaled ~6× with zero added headcount.</p></div>
+        </div>
       </article>
       <article class="case rv">
         <div class="no">03</div>
         <h3>Private workflow → shared infrastructure</h3>
-        <p class="prob">A production dubbing API was usable only by hand — the knowledge locked in one person. I built a 14-tool MCP server exposing it as first-class tools any AI agent or teammate can call, plus internal ops dashboards.</p>
-        <div class="impact"><div class="line">One person's capability became <span class="hl">org-wide infrastructure</span> — AI adoption as working software, not slideware.</div></div>
+        <div class="pbi">
+          <div class="step"><span class="k">Problem</span><p>A production dubbing API was usable only by hand or through bespoke one-off scripts — the knowledge locked in one person.</p></div>
+          <div class="step"><span class="k">Built</span><p>A 14-tool MCP server (TypeScript) exposing submit / update / cancel / usage / issues as first-class tools any AI agent or teammate can call — plus internal ops dashboards (FastAPI · SQLite · Streamlit).</p></div>
+          <div class="step impact"><span class="k">Impact</span><p>One person's capability became <span class="hl">org-wide, agent-callable infrastructure</span> — AI adoption as working software, not slideware.</p></div>
+        </div>
       </article>
       <article class="case rv">
         <div class="no">04</div>
         <h3>High-stakes compliance, zero-defect</h3>
-        <p class="prob">Premium broadcast clients ship on strict multi-channel protocols; a legal audit found hundreds of voice-consent records scrambled, on a deadline. I codified the delivery SOPs and built a programmatic re-matching pipeline.</p>
-        <div class="impact"><div class="line"><span class="hl">282 of 287</span> records re-matched under deadline; <b>zero-defect</b> deliveries on the most reputation-sensitive relationships.</div></div>
+        <div class="pbi">
+          <div class="step"><span class="k">Problem</span><p>Premium broadcast clients ship on strict, unforgiving multi-channel protocols; separately, a legal audit found hundreds of voice-consent records scrambled — on a deadline.</p></div>
+          <div class="step"><span class="k">Built</span><p>Codified a major U.S. broadcast network's delivery SOP across three transport channels with versioning and barcode schemas; built a programmatic re-matching pipeline for the waiver audit.</p></div>
+          <div class="step impact"><span class="k">Impact</span><p><span class="hl">282 of 287</span> records re-matched under deadline; <b>zero-defect</b> deliveries on the most reputation-sensitive relationships.</p></div>
+        </div>
       </article>
     </div>
   </div>
@@ -327,10 +346,11 @@ footer p{color:rgba(255,255,255,.6);margin-top:20px;font-size:17px}
     <div class="disp rv">Let's <span class="v">build.</span></div>
     <p class="rv">Customer success · Project management · Account management · AI-driven operations</p>
     <div class="f-btns rv">
-      <a class="btn btn-volt" href="mailto:danielcymes@gmail.com">Email me</a>
+      <a class="btn btn-volt" id="emailBtn" href="mailto:danielcymes@gmail.com">danielcymes@gmail.com</a>
       <a class="btn btn-line" href="https://www.linkedin.com/in/daniel-cymes/" target="_blank" rel="noopener">LinkedIn</a>
       <a class="btn btn-line" href="https://github.com/3aruch-dev" target="_blank" rel="noopener">GitHub</a>
     </div>
+    <div class="copied" id="copied">Email copied ✓</div>
     <p class="f-note rv"><b>Provenance:</b> metrics on this page come from append-only operational ledgers (delivery logs, QC verdicts, client rate-card reconciliation) generated by the pipeline itself, snapshotted 2026-10-25. Client names appear only where publicly listed. Built by Daniel with Claude — the same way the pipelines were.</p>
   </div>
 </footer>
@@ -341,6 +361,14 @@ const MONTHLY=[["MAY",306],["JUN",298],["AUG",808],["SEP",231],["OCT",211]];
 
 // duplicate ticker content for seamless loop
 const tick=document.getElementById('tick');tick.innerHTML+=tick.innerHTML;
+
+// email button: open mail client AND copy the address (covers devices with no mail app)
+document.getElementById('emailBtn').addEventListener('click',()=>{
+  navigator.clipboard?.writeText('danielcymes@gmail.com').then(()=>{
+    const c=document.getElementById('copied');c.classList.add('show');
+    setTimeout(()=>c.classList.remove('show'),2200);
+  }).catch(()=>{});
+});
 
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
 document.querySelectorAll('.rv').forEach((el,i)=>{el.style.transitionDelay=(i%4*80)+'ms';io.observe(el)});
